@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymSocial - Tu Comunidad de Entrenamiento</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">GYM<span>SOCIAL</span></div>
+            <ul id="nav-links">
+                <li><a href="#feedback-section">Experiencias</a></li>
+                <li><a href="#buddy-section">Gym Buddy</a></li>
+                <li id="user-display"></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Sección de Login/Registro -->
+        <section id="auth-section" class="card">
+            <h2>¡Hola! Identifícate</h2>
+            <p>Ingresa tu nombre para empezar a participar en la comunidad.</p>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Tu nombre o usuario" required>
+                <button type="submit" class="btn-primary">Entrar</button>
+            </form>
+        </section>
+
+        <!-- Contenido Principal (Oculto hasta login) -->
+        <div id="main-content" class="hidden">
+            
+            <!-- Formulario de Feedback -->
+            <section id="feedback-section" class="card">
+                <h3>📢 Comparte tu Experiencia</h3>
+                <form id="feedback-form">
+                    <textarea id="feedback-text" placeholder="¿Cómo fue tu entrenamiento hoy? ¿Qué podemos mejorar?" required></textarea>
+                    <button type="submit" class="btn-primary">Publicar Comentario</button>
+                </form>
+                <div id="feedback-list" class="feed-container">
+                    <!-- Los comentarios aparecerán aquí -->
+                </div>
+            </section>
+
+            <!-- Sección Gym Buddy -->
+            <section id="buddy-section" class="card">
+                <h3>🤝 Busca un Gym Buddy</h3>
+                <form id="buddy-form">
+                    <input type="text" id="buddy-goal" placeholder="¿Qué vas a entrenar? (Ej: Powerlifting, Crossfit...)" required>
+                    <input type="text" id="buddy-time" placeholder="¿A qué hora? (Ej: Lunes a Viernes 7:00 AM)" required>
+                    <button type="submit" class="btn-secondary">Publicar Búsqueda</button>
+                </form>
+                <div id="buddy-list" class="feed-container">
+                    <!-- Las búsquedas aparecerán aquí -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
