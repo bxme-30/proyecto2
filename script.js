@@ -40,5 +40,5 @@ document.addEventListener('DOMContentLoaded', () => {
     loginBtn.addEventListener('click', openAuthPlaceholder);
 
     // --- Inicialización ---
-    userDisplay.textContent = `👤 ${currentUser}`;
+    userDisplay.textContent = ` ${currentUser}`;
 });
