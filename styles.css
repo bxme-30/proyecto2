@@ -21,6 +21,18 @@ body {
     background-color: var(--dark);
     color: var(--text);
     line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.85)),
+        url("images/background.png") center / cover no-repeat;
+    z-index: -1;
 }
 
 .container {
@@ -81,6 +93,105 @@ main {
     border-radius: 12px;
     margin-bottom: 30px;
     border: 1px solid var(--light-grey);
+}
+
+
+.promo-section {
+    margin: 0 calc(50% - 50vw) 24px;
+    width: 100vw;
+}
+
+.carousel {
+    margin-top: 10px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0;
+    border: none;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slide {
+    min-width: 100%;
+    height: 30vh;
+    background: #0f0f0f;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.cta-buttons {
+    display: flex;
+    justify-content:center;
+    gap: 50px;
+    margin-top: 200px;
+}
+
+.cta-buttons button {
+    width: auto;
+    min-width: 220px;
+    padding: 50px 110px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+}
+
+.cta-buttons button:hover {
+    transform: translateY(-3px) scale(1.02);
+    filter: brightness(1.08);
+}
+
+.cta-buttons .btn-primary {
+    background: linear-gradient(135deg, #d4ff00, #b8de00);
+    color: #121212;
+}
+
+.cta-buttons .btn-secondary {
+    background: linear-gradient(135deg, #000000, #000000);
+    color: #d4ff00;
+}
+
+.cta-buttons .btn-primary:hover {
+    box-shadow: 0 14px 30px rgba(212, 255, 0, 0.35);
+}
+
+.cta-buttons .btn-secondary:hover {
+    box-shadow: 0 14px 30px rgba(48, 48, 49, 0.35);
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.hero-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+
+.hero-logo img {
+    width: 300px;
+    height: auto;
 }
 
 .hidden {
@@ -175,4 +286,10 @@ button:active {
 
 .buddy-details span b {
     color: var(--text);
+}
+
+@media (max-width: 640px) {
+    .cta-buttons {
+        grid-template-columns: 1fr;
+    }
 }

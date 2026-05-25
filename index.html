@@ -3,62 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GymSocial - Tu Comunidad de Entrenamiento</title>
+    <title>GymLab Fitness - Comunnity</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">GYM<span>SOCIAL</span></div>
+            <div class="logo">GYM<span>LAB FITNESS</span></div>
             <ul id="nav-links">
-                <li><a href="#feedback-section">Experiencias</a></li>
-                <li><a href="#buddy-section">Gym Buddy</a></li>
                 <li id="user-display"></li>
             </ul>
         </nav>
     </header>
 
     <main class="container">
-        <!-- Sección de Login/Registro -->
-        <section id="auth-section" class="card">
-            <h2>¡Hola! Identifícate</h2>
-            <p>Ingresa tu nombre para empezar a participar en la comunidad.</p>
-            <form id="login-form">
-                <input type="text" id="username" placeholder="Tu nombre o usuario" required>
-                <button type="submit" class="btn-primary">Entrar</button>
-            </form>
+        <!-- Carrusel de publicaciones destacadas -->
+        <section id="promo-section" class="promo-section">
+            <div class="carousel" aria-live="polite">
+                <div class="carousel-track">
+                    <article class="slide">
+                        <img src="images/background.png" alt="Promo 1">
+                    </article>
+                    <article class="slide">
+                        <img src="images/background.png" alt="Promo 2">
+                    </article>
+                    <article class="slide">
+                        <img src="images/background.png" alt="Promo 3">
+                    </article>
+                </div>
+            </div>
+            <div class="hero-logo">
+                <img src="images/gml_verde.png" alt="GymLab Fitness">
+            </div>
+            <div class="title">
+                <h1>Únete a la comunidad de entrenamiento más grande</h1>
+                <p>Comparte tus progresos, encuentra compañeros de entrenamiento y accede a rutinas personalizadas.</p>
+            </div>
+            <div class="cta-buttons">
+                <button type="button" id="btn-signup" class="btn-primary">Inscribete</button>
+                <button type="button" id="btn-login" class="btn-secondary">Iniciar sesion</button>
+            </div>
         </section>
-
-        <!-- Contenido Principal (Oculto hasta login) -->
-        <div id="main-content" class="hidden">
-            
-            <!-- Formulario de Feedback -->
-            <section id="feedback-section" class="card">
-                <h3>📢 Comparte tu Experiencia</h3>
-                <form id="feedback-form">
-                    <textarea id="feedback-text" placeholder="¿Cómo fue tu entrenamiento hoy? ¿Qué podemos mejorar?" required></textarea>
-                    <button type="submit" class="btn-primary">Publicar Comentario</button>
-                </form>
-                <div id="feedback-list" class="feed-container">
-                    <!-- Los comentarios aparecerán aquí -->
-                </div>
-            </section>
-
-            <!-- Sección Gym Buddy -->
-            <section id="buddy-section" class="card">
-                <h3>🤝 Busca un Gym Buddy</h3>
-                <form id="buddy-form">
-                    <input type="text" id="buddy-goal" placeholder="¿Qué vas a entrenar? (Ej: Powerlifting, Crossfit...)" required>
-                    <input type="text" id="buddy-time" placeholder="¿A qué hora? (Ej: Lunes a Viernes 7:00 AM)" required>
-                    <button type="submit" class="btn-secondary">Publicar Búsqueda</button>
-                </form>
-                <div id="buddy-list" class="feed-container">
-                    <!-- Las búsquedas aparecerán aquí -->
-                </div>
-            </section>
-
-        </div>
     </main>
 
     <script src="script.js"></script>
