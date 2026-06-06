@@ -1,44 +1,187 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Elementos del DOM ---
     const userDisplay = document.getElementById('user-display');
+    const heroScreen = document.querySelector('[data-screen="hero"]');
+    const productsScreen = document.querySelector('[data-screen="products"]');
+    const communityScreen = document.querySelector('[data-screen="community"]');
+    const loadingScreen = document.getElementById('loading-screen');
+    const loginLoadingScreen = document.getElementById('login-loading-screen');
+    const productLoadingScreen = document.getElementById('product-loading-screen');
+    const authScreen = document.getElementById('auth-screen');
+    const btnProducts = document.getElementById('btn-products');
+    const btnLogin = document.getElementById('btn-login');
+    const openAuthFromProduct = document.getElementById('open-auth-from-product');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const authTabs = Array.from(document.querySelectorAll('[data-auth-tab]'));
+    const authForms = Array.from(document.querySelectorAll('[data-auth-form]'));
+    const carouselTrack = document.querySelector('.carousel-track');
+    const carouselViewport = document.querySelector('.carousel');
+    const slides = Array.from(document.querySelectorAll('.slide'));
 
-    const promoSection = document.getElementById('promo-section');
-    const carouselTrack = promoSection?.querySelector('.carousel-track');
-    const slides = promoSection ? Array.from(promoSection.querySelectorAll('.slide')) : [];
-    const signupBtn = document.getElementById('btn-signup');
-    const loginBtn = document.getElementById('btn-login');
-    
-    // --- Estado de la App ---
-    let currentUser = localStorage.getItem('gymUser') || 'Invitado';
-
-    // --- Carrusel de promos ---
     let currentSlide = 0;
     let carouselTimer = null;
+    let loadingTimer = null;
 
-    if (slides.length > 0) {
+    const appState = {
+        currentUser: localStorage.getItem('gymUser') || 'Invitado',
+    };
+
+    const showScreen = (screen) => {
+        [heroScreen, productsScreen, communityScreen].forEach((element) => {
+            element.classList.remove('is-active');
+        });
+        screen.classList.add('is-active');
+    };
+
+    const hideOverlays = () => {
+        [loadingScreen, loginLoadingScreen, productLoadingScreen, authScreen].forEach((element) => {
+            element.classList.remove('is-visible');
+            element.setAttribute('aria-hidden', 'true');
+        });
+    };
+
+    const showOverlay = (overlay) => {
+        hideOverlays();
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+    };
+
+    const stopLoadingTimer = () => {
+        if (loadingTimer) {
+            clearTimeout(loadingTimer);
+            loadingTimer = null;
+        }
+    };
+
+    const openLoadingSequence = (overlay, nextStep, delay = 1700) => {
+        showOverlay(overlay);
+        stopLoadingTimer();
+        loadingTimer = setTimeout(() => {
+            hideOverlays();
+            nextStep();
+        }, delay);
+    };
+
+    const setAuthMode = (mode) => {
+        authTabs.forEach((tab) => tab.classList.toggle('is-active', tab.dataset.authTab === mode));
+        authForms.forEach((form) => form.classList.toggle('is-active', form.dataset.authForm === mode));
+    };
+
+    const goToCommunity = () => {
+        showScreen(communityScreen);
+        appState.currentUser = localStorage.getItem('gymUser') || appState.currentUser || 'Invitado';
+        userDisplay.textContent = appState.currentUser;
+    };
+
+    const goToProducts = () => {
+        showScreen(productsScreen);
+    };
+
+    const openAuth = () => {
+        setAuthMode('login');
+        showOverlay(authScreen);
+    };
+
+    const createUser = ({ code, password, email }) => {
+        const users = JSON.parse(localStorage.getItem('gymBuddyUsers') || '{}');
+        users[code] = { password, email };
+        localStorage.setItem('gymBuddyUsers', JSON.stringify(users));
+        localStorage.setItem('gymUser', code);
+        appState.currentUser = code;
+        userDisplay.textContent = code;
+    };
+
+    const validateLogin = (code, password) => {
+        const users = JSON.parse(localStorage.getItem('gymBuddyUsers') || '{}');
+        return Boolean(users[code] && users[code].password === password);
+    };
+
+    const startCarousel = () => {
+        if (!slides.length || !carouselTrack || !carouselViewport) {
+            return;
+        }
+
         const goToSlide = (index) => {
             currentSlide = (index + slides.length) % slides.length;
-            carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            const offset = currentSlide * carouselViewport.clientWidth;
+            carouselTrack.style.transform = `translateX(-${offset}px)`;
         };
 
         const nextSlide = () => goToSlide(currentSlide + 1);
 
-        const startCarousel = () => {
+        const initCarousel = () => {
+            goToSlide(0);
+            if (carouselTimer) {
+                clearInterval(carouselTimer);
+            }
             carouselTimer = setInterval(nextSlide, 4500);
         };
 
-        goToSlide(0);
-        startCarousel();
-    }
+        window.addEventListener('resize', () => goToSlide(currentSlide));
 
-    // --- CTA Buttons ---
-    const openAuthPlaceholder = () => {
-        alert('Aqui iremos con el registro e inicio de sesion.');
+        if (document.readyState === 'complete') {
+            initCarousel();
+        } else {
+            window.addEventListener('load', initCarousel, { once: true });
+        }
     };
 
-    signupBtn.addEventListener('click', openAuthPlaceholder);
-    loginBtn.addEventListener('click', openAuthPlaceholder);
+    authTabs.forEach((tab) => {
+        tab.addEventListener('click', () => setAuthMode(tab.dataset.authTab));
+    });
 
-    // --- Inicialización ---
-    userDisplay.textContent = ` ${currentUser}`;
+    btnProducts.addEventListener('click', () => {
+        openLoadingSequence(productLoadingScreen, goToProducts);
+    });
+
+    btnLogin.addEventListener('click', () => {
+        openAuth();
+    });
+
+    openAuthFromProduct.addEventListener('click', () => {
+        openAuth();
+    });
+
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const code = document.getElementById('login-code').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+
+        if (!validateLogin(code, password)) {
+            alert('Codigo Buddy o contraseña incorrectos.');
+            return;
+        }
+
+        localStorage.setItem('gymUser', code);
+        appState.currentUser = code;
+        userDisplay.textContent = code;
+        openLoadingSequence(loginLoadingScreen, goToCommunity);
+    });
+
+    registerForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const code = document.getElementById('register-code').value.trim();
+        const password = document.getElementById('register-password').value.trim();
+        const email = document.getElementById('register-email').value.trim();
+
+        if (!code || !password || !email) {
+            alert('Completa todos los campos para crear tu usuario.');
+            return;
+        }
+
+        createUser({ code, password, email });
+        openLoadingSequence(loginLoadingScreen, goToCommunity);
+    });
+
+    document.querySelectorAll('[data-return="hero"]').forEach((button) => {
+        button.addEventListener('click', () => {
+            showScreen(heroScreen);
+        });
+    });
+
+    userDisplay.textContent = appState.currentUser;
+    showScreen(heroScreen);
+    startCarousel();
 });

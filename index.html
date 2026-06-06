@@ -1,48 +1,165 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="icon" href="images/gymicon.ico" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GymLab Fitness - Comunnity</title>
+    <title>GymLab Fitness - Community</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="container">
+        <nav class="container topbar">
             <div class="logo">GYM<span>LAB FITNESS</span></div>
             <ul id="nav-links">
-                <li id="user-display"></li>
+                <li id="user-display">Invitado</li>
             </ul>
         </nav>
     </header>
 
-    <main class="container">
-        <!-- Carrusel de publicaciones destacadas -->
-        <section id="promo-section" class="promo-section">
+    <main class="app-shell">
+        <section class="hero-screen screen is-active" data-screen="hero">
             <div class="carousel" aria-live="polite">
                 <div class="carousel-track">
-                    <article class="slide">
-                        <img src="images/background.png" alt="Promo 1">
-                    </article>
-                    <article class="slide">
-                        <img src="images/background.png" alt="Promo 2">
-                    </article>
-                    <article class="slide">
-                        <img src="images/background.png" alt="Promo 3">
-                    </article>
+                    <article class="slide"><img src="images/promo1.png" alt="Promocion 1"></article>
+                    <article class="slide"><img src="images/promo2.png" alt="Promocion 2"></article>
+                    <article class="slide"><img src="images/background.png" alt="Promocion 3"></article>
                 </div>
             </div>
-            <div class="hero-logo">
+
+            <div class="hero-brand">
                 <img src="images/gml_verde.png" alt="GymLab Fitness">
             </div>
-            <div class="title">
-                <h1>Únete a la comunidad de entrenamiento más grande</h1>
-                <p>Comparte tus progresos, encuentra compañeros de entrenamiento y accede a rutinas personalizadas.</p>
+
+            <div class="hero-copy">
+                <h1>Tu comunidad de entrenamiento, productos y progreso</h1>
+                <p>Gym Buddy une rutina, seguimiento y conexión con otros usuarios en una sola plataforma.</p>
             </div>
+
             <div class="cta-buttons">
-                <button type="button" id="btn-signup" class="btn-primary">Inscribete</button>
+                <button type="button" id="btn-products" class="btn-primary">Nuestos Productos</button>
                 <button type="button" id="btn-login" class="btn-secondary">Iniciar sesion</button>
+            </div>
+        </section>
+
+        <section class="screen overlay-screen" id="loading-screen" aria-hidden="true">
+            <div class="loading-card">
+                <img class="loading-logo" src="images/gml_blanco.png" alt="GymLab Fitness">
+                <div class="loading-text">Cargando experiencia...</div>
+                <div class="loading-bar">
+                    <div class="loading-bar-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="screen modal-screen" id="auth-screen" aria-hidden="true">
+            <div class="auth-card">
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab is-active" data-auth-tab="login">Iniciar sesion</button>
+                    <button type="button" class="auth-tab" data-auth-tab="register">Crear usuario</button>
+                </div>
+
+                <form id="login-form" class="auth-form is-active" data-auth-form="login">
+                    <h2>Codigo Buddy</h2>
+                    <input type="text" id="login-code" placeholder="Codigo Buddy" required>
+                    <input type="password" id="login-password" placeholder="Contraseña" required>
+                    <button type="submit" class="btn-primary">Entrar a GymLab Community</button>
+                    <p class="auth-link-copy">¿Eres nuevo?</p>
+                </form>
+
+                <form id="register-form" class="auth-form" data-auth-form="register">
+                    <h2>Crear usuario</h2>
+                    <input type="text" id="register-code" placeholder="Codigo Buddy" required>
+                    <input type="password" id="register-password" placeholder="Contraseña" required>
+                    <input type="email" id="register-email" placeholder="Correo" required>
+                    <button type="submit" class="btn-secondary">Crear y acceder</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="screen loading-screen" id="login-loading-screen" aria-hidden="true">
+            <div class="loading-card">
+                <img class="loading-logo" src="images/gml_verde.png" alt="GymLab Fitness">
+                <div class="loading-text">Preparando tu comunidad...</div>
+                <div class="loading-bar">
+                    <div class="loading-bar-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="screen loading-screen" id="product-loading-screen" aria-hidden="true">
+            <div class="loading-card">
+                <img class="loading-logo" src="images/gml_blanco.png" alt="GymLab Fitness">
+                <div class="loading-text">Cargando Gym Buddy...</div>
+                <div class="loading-bar">
+                    <div class="loading-bar-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="screen product-screen" data-screen="products">
+            <div class="section-header">
+                <h2>Gym Buddy</h2>
+                <p>Tu compañero de entrenamiento dentro y fuera del gym</p>
+            </div>
+
+            <div class="product-hero">
+                <div class="product-badge">Producto + plataforma web</div>
+                <div class="product-intro">
+                    <p>Gym Buddy es una toalla de microfibra pensada para mantenerse fija en las maquinas del gym, con diseño funcional y una experiencia digital para seguir rutinas, registrar avances y conectar con otros usuarios fitness.</p>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <article class="info-card">
+                    <h3>Caracteristicas</h3>
+                    <ul>
+                        <li>Toalla de microfibra ligera</li>
+                        <li>Banda elastica o capucha para enganchar a maquinas</li>
+                        <li>Diseño antideslizante</li>
+                        <li>Secado rapido</li>
+                        <li>Ideal para bancos, respaldos y maquinas</li>
+                    </ul>
+                </article>
+
+                <article class="info-card">
+                    <h3>Experiencia digital</h3>
+                    <p>Una plataforma web donde puedes seguir rutinas, registrar avances, conectar con otros usuarios y mantener tu progreso organizado.</p>
+                </article>
+            </div>
+
+            <div class="reference-layout">
+                <div class="reference-box">Imagen de referencia 1</div>
+                <div class="reference-box">Imagen de referencia 2</div>
+                <div class="reference-box">Imagen de referencia 3</div>
+            </div>
+
+            <div class="product-actions">
+                <button type="button" class="btn-primary" data-return="hero">Volver</button>
+                <button type="button" class="btn-secondary" id="open-auth-from-product">Acceso a comunidad</button>
+            </div>
+        </section>
+
+        <section class="screen community-screen" data-screen="community">
+            <div class="section-header">
+                <h2>GymLab Community</h2>
+                <p>Elige una seccion para continuar</p>
+            </div>
+
+            <div class="community-menu">
+                <button type="button" class="community-btn">Mi Rutina</button>
+                <button type="button" class="community-btn">Mis avances</button>
+                <button type="button" class="community-btn">Retos Gym Buddy</button>
+                <button type="button" class="community-btn">Match Buddy</button>
+            </div>
+
+            <div class="community-panel">
+                <div class="panel-empty">Por ahora dejamos estos espacios listos para construir el contenido de cada boton.</div>
+            </div>
+
+            <div class="product-actions">
+                <button type="button" class="btn-secondary" data-return="hero">Salir</button>
             </div>
         </section>
     </main>
