@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginLoadingScreen = document.getElementById('login-loading-screen');
     const productLoadingScreen = document.getElementById('product-loading-screen');
     const authScreen = document.getElementById('auth-screen');
+    const authClose = document.getElementById('auth-close');
     const btnProducts = document.getElementById('btn-products');
     const btnLogin = document.getElementById('btn-login');
     const openAuthFromProduct = document.getElementById('open-auth-from-product');
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let loadingTimer = null;
 
     const appState = {
-        currentUser: localStorage.getItem('username') || 'Invitado',
+        currentUser: localStorage.getItem('gymUser') || 'Invitado',
     };
 
     const showScreen = (screen) => {
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const goToCommunity = () => {
         showScreen(communityScreen);
-        appState.currentUser = localStorage.getItem('username') || appState.currentUser || 'Invitado';
+        appState.currentUser = localStorage.getItem('gymUser') || appState.currentUser || 'Invitado';
         userDisplay.textContent = appState.currentUser;
     };
 
@@ -82,11 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
         showOverlay(authScreen);
     };
 
+    const closeAuth = () => {
+        hideOverlays();
+        showScreen(heroScreen);
+    };
+
     const createUser = ({ code, password, email, username }) => {
         const users = JSON.parse(localStorage.getItem('gymBuddyUsers') || '{}');
         users[username] = { password, email, code };
         localStorage.setItem('gymBuddyUsers', JSON.stringify(users));
-        localStorage.setItem('username', username);
+        localStorage.setItem('gymUser', username);
         appState.currentUser = username;
         userDisplay.textContent = username;
     };
@@ -142,6 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
         openAuth();
     });
 
+    authClose.addEventListener('click', () => {
+        closeAuth();
+    });
+
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
@@ -153,9 +163,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        localStorage.setItem('username', username);
-        appState.currentUser = username;
-        userDisplay.textContent = username;
+        localStorage.setItem('gymUser', code);
+        appState.currentUser = code;
+        userDisplay.textContent = code;
         openLoadingSequence(loginLoadingScreen, goToCommunity);
     });
 
@@ -165,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const code = document.getElementById('register-code').value.trim();
         const password = document.getElementById('register-password').value.trim();
         const email = document.getElementById('register-email').value.trim();
-        const username = document.getElementById('username').value.trim();
+        const username = document.getElementById('register-username').value.trim();
 
         if (!code || !password || !email || !username) {
             alert('Completa todos los campos para crear tu usuario.');

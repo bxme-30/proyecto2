@@ -56,6 +56,7 @@
 
         <section class="screen modal-screen" id="auth-screen" aria-hidden="true">
             <div class="auth-card">
+                <button type="button" class="auth-close" id="auth-close" aria-label="Cerrar">&times;</button>
                 <div class="auth-tabs">
                     <button type="button" class="auth-tab is-active" data-auth-tab="login">Iniciar sesion</button>
                     <button type="button" class="auth-tab" data-auth-tab="register">Crear usuario</button>
@@ -74,7 +75,7 @@
                     <input type="text" id="register-code" placeholder="Codigo Buddy" required>
                     <input type="password" id="register-password" placeholder="Contraseña" required>
                     <input type="email" id="register-email" placeholder="Correo" required>
-                    <input type="text" id="username" placeholder="Nombre de usuario" required>
+                    <input type="text" id="register-username" placeholder="Nombre de usuario" required>
                     <button type="submit" class="btn-secondary">Crear y acceder</button>
                 </form>
             </div>
@@ -132,9 +133,15 @@
             </div>
 
             <div class="reference-layout">
-                <div class="reference-box">Imagen de referencia 1</div>
-                <div class="reference-box">Imagen de referencia 2</div>
-                <div class="reference-box">Imagen de referencia 3</div>
+                <div class="reference-box">
+                    <img src="images/producto1.png" alt="Gym Buddy producto 1">
+                </div>
+                <div class="reference-box">
+                    <img src="images/producto2.png" alt="Gym Buddy producto 2">
+                </div>
+                <div class="reference-box">
+                    <img src="images/producto3.png" alt="Gym Buddy producto 3">
+                </div>
             </div>
 
             <div class="product-actions">
