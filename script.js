@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let loadingTimer = null;
 
     const appState = {
-        currentUser: localStorage.getItem('gymUser') || 'Invitado',
+        currentUser: localStorage.getItem('username') || 'Invitado',
     };
 
     const showScreen = (screen) => {
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const goToCommunity = () => {
         showScreen(communityScreen);
-        appState.currentUser = localStorage.getItem('gymUser') || appState.currentUser || 'Invitado';
+        appState.currentUser = localStorage.getItem('username') || appState.currentUser || 'Invitado';
         userDisplay.textContent = appState.currentUser;
     };
 
@@ -82,18 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
         showOverlay(authScreen);
     };
 
-    const createUser = ({ code, password, email }) => {
+    const createUser = ({ code, password, email, username }) => {
         const users = JSON.parse(localStorage.getItem('gymBuddyUsers') || '{}');
-        users[code] = { password, email };
+        users[username] = { password, email, code };
         localStorage.setItem('gymBuddyUsers', JSON.stringify(users));
-        localStorage.setItem('gymUser', code);
-        appState.currentUser = code;
-        userDisplay.textContent = code;
+        localStorage.setItem('username', username);
+        appState.currentUser = username;
+        userDisplay.textContent = username;
     };
 
-    const validateLogin = (code, password) => {
+    const validateLogin = (username, password) => {
         const users = JSON.parse(localStorage.getItem('gymBuddyUsers') || '{}');
-        return Boolean(users[code] && users[code].password === password);
+        return Boolean(users[username] && users[username].password === password);
     };
 
     const startCarousel = () => {
@@ -149,13 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('login-password').value.trim();
 
         if (!validateLogin(code, password)) {
-            alert('Codigo Buddy o contraseña incorrectos.');
+            alert('Usuario o contraseña incorrectos.');
             return;
         }
 
-        localStorage.setItem('gymUser', code);
-        appState.currentUser = code;
-        userDisplay.textContent = code;
+        localStorage.setItem('username', username);
+        appState.currentUser = username;
+        userDisplay.textContent = username;
         openLoadingSequence(loginLoadingScreen, goToCommunity);
     });
 
@@ -165,13 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const code = document.getElementById('register-code').value.trim();
         const password = document.getElementById('register-password').value.trim();
         const email = document.getElementById('register-email').value.trim();
+        const username = document.getElementById('username').value.trim();
 
-        if (!code || !password || !email) {
+        if (!code || !password || !email || !username) {
             alert('Completa todos los campos para crear tu usuario.');
             return;
         }
 
-        createUser({ code, password, email });
+        createUser({ code, password, email, username });
         openLoadingSequence(loginLoadingScreen, goToCommunity);
     });
 
