@@ -152,6 +152,12 @@ document.addEventListener('DOMContentLoaded', () => {
         closeAuth();
     });
 
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && authScreen.classList.contains('is-visible')) {
+            closeAuth();
+        }
+    });
+
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
